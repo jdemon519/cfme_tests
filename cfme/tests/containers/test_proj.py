@@ -17,6 +17,8 @@ pytest_generate_tests = testgen.generate(
     testgen.container_providers, scope="function")
 
 # container projects
+
+
 @pytest.mark.parametrize('rel',
                          ['Containers Provider',
                           'Routes',
@@ -47,4 +49,3 @@ def test_projects_rel(provider, rel):
             assert len([r for r in list_tbl.rows()]) == val
         except ValueError:
             assert val == InfoBlock.text('Properties', 'Name')
-
