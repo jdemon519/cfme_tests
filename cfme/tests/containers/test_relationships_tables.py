@@ -4,9 +4,6 @@ import pytest
 from cfme.fixtures import pytest_selenium as sel
 from cfme.containers import list_tbl
 from cfme.containers.project import Project
-from cfme.containers.pod import Pod
-from cfme.containers.service import Service
-from cfme.containers.node import Node
 from utils import testgen
 from utils.version import current_version
 from cfme.web_ui import InfoBlock
@@ -33,103 +30,12 @@ def test_projects_rel(provider, rel):
     mgmt_objs = provider.mgmt.list_project()  # run only if table is not empty
 
     if ui_projects:
-        # verify that mgmt pods exist in ui listed projects
+        # verify that mgmt projects exist in ui listed projects
         assert set(ui_projects).issubset(
             [obj.name for obj in mgmt_objs]), 'Missing objects'
 
     for name in ui_projects:
         obj = Project(name, provider)
-
-        val = obj.get_detail('Relationships', rel)
-        if val == '0':
-            continue
-        obj.click_element('Relationships', rel)
-
-        try:
-            val = int(val)
-            assert len([r for r in list_tbl.rows()]) == val
-        except ValueError:
-            assert val == InfoBlock.text('Properties', 'Name')
-
-
-@pytest.mark.parametrize('rel',
-                         ['Containers Provider',
-                          'Project',
-                          'Services',
-                          'Replicator',
-                          'Containers',
-                          'Node'])
-def test_pods_rel(provider, rel):
-    sel.force_navigate('containers_pods')
-    ui_pods = [r.name.text for r in list_tbl.rows()]
-    mgmt_objs = provider.mgmt.list_container_group()  # run only if table is not empty
-
-    if ui_pods:
-        # verify that mgmt pods exist in ui listed pods
-        assert set(ui_pods).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
-
-    for name in ui_pods:
-        obj = Pod(name, provider)
-
-        val = obj.get_detail('Relationships', rel)
-        if val == '0':
-            continue
-        obj.click_element('Relationships', rel)
-
-        try:
-            val = int(val)
-            assert len([r for r in list_tbl.rows()]) == val
-        except ValueError:
-            assert val == InfoBlock.text('Properties', 'Name')
-
-
-@pytest.mark.parametrize(
-    'rel', ['Containers Provider', 'Project', 'Routes', 'Pods', 'Nodes'])
-def test_services_rel(provider, rel):
-    sel.force_navigate('containers_services')
-    ui_services = [r.name.text for r in list_tbl.rows()]
-    mgmt_objs = provider.mgmt.list_service()  # run only if table is not empty
-
-    if ui_services:
-        # verify that mgmt pods exist in ui listed services
-        assert set(ui_services).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
-
-    for name in ui_services:
-        obj = Service(name, provider)
-
-        val = obj.get_detail('Relationships', rel)
-        if val == '0':
-            continue
-        obj.click_element('Relationships', rel)
-
-        try:
-            val = int(val)
-            assert len([r for r in list_tbl.rows()]) == val
-        except ValueError:
-            assert val == InfoBlock.text('Properties', 'Name')
-
-
-@pytest.mark.parametrize('rel',
-                         ['Containers Provider',
-                          'Routes',
-                          'Services',
-                          'Replicators',
-                          'Pods',
-                          'Containers'])
-def test_nodes_rel(provider, rel):
-    sel.force_navigate('containers_nodes')
-    ui_nodes = [r.name.text for r in list_tbl.rows()]
-    mgmt_objs = provider.mgmt.list_node()  # run only if table is not empty
-
-    if ui_nodes:
-        # verify that mgmt pods exist in ui listed nodes
-        assert set(ui_nodes).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
-
-    for name in ui_nodes:
-        obj = Node(name, provider)
 
         val = obj.get_detail('Relationships', rel)
         if val == '0':
