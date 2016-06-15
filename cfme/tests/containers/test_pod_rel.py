@@ -3,7 +3,6 @@
 import pytest
 from cfme.fixtures import pytest_selenium as sel
 from cfme.containers import list_tbl as list_tbl_pods
-from cfme.containers import list_tbl as list_tbl_pods_rel
 from cfme.containers.pod import Pod
 from utils import testgen
 from utils.version import current_version
@@ -16,8 +15,6 @@ pytestmark = [
     pytest.mark.tier(2)]
 pytest_generate_tests = testgen.generate(
     testgen.container_providers, scope="function")
-
-# container pods
 
 
 @pytest.mark.parametrize('rel',
@@ -47,7 +44,7 @@ def test_pods_rel(provider, rel):
 
         try:
             val = int(val)
-            assert len([r for r in list_tbl_pods_rel.rows()]) == val
+            assert len([r for r in list_tbl_pods.rows()]) == val
         except ValueError:
             assert val == InfoBlock.text('Properties', 'Name')
 

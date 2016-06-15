@@ -3,7 +3,6 @@
 import pytest
 from cfme.fixtures import pytest_selenium as sel
 from cfme.containers import list_tbl as list_tbl_project
-from cfme.containers import list_tbl as list_tbl_project_rel
 from cfme.containers.project import Project
 from utils import testgen
 from utils.version import current_version
@@ -45,7 +44,7 @@ def test_projects_rel(provider, rel):
 
         try:
             val = int(val)
-            assert len([r for r in list_tbl_project_rel.rows()]) == val
+            assert len([r for r in list_tbl_project.rows()]) == val
         except ValueError:
             assert val == InfoBlock.text('Properties', 'Name')
 
