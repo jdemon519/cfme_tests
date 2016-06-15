@@ -50,3 +50,8 @@ def test_pods_rel(provider, rel):
             assert len([r for r in list_tbl_pods_rel.rows()]) == val
         except ValueError:
             assert val == InfoBlock.text('Properties', 'Name')
+
+
+def del_prov_rel(provider):
+    provider.delete(cancel=False)
+    provider.wait_for_delete()
