@@ -22,8 +22,7 @@ pytest_generate_tests = testgen.generate(
 def test_summary_properties_validation(provider):
     """
           This test verifies that the number of running containers in the status summary table
-          is the same number that
-          appears in the Relationships table in the Containers field
+          is the same number that appears in the Relationships table
     """
     sel.force_navigate('containers_pods')
     list_tbl_pod = CheckboxTable(table_locator="//div[@id='list_grid']//table")
