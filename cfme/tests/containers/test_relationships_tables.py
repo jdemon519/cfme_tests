@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+<<<<<<< HEAD
 """ This module verifies the integrity of the relationships table
     We also verify that clicking on the relationships table field
+=======
+""" This module verifies the integrity of the Relationships table
+    We also verify that clicking on the Relationships table field
+>>>>>>> test_jenkins_patch
     takes the user to the correct page, and the number of rows
     that appears on that page is equal to the number in the
     Relationships table
