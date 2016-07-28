@@ -8,6 +8,12 @@ from . import details_page
 
 list_tbl = CheckboxTable(table_locator="//div[@id='list_grid']//table")
 
+
+def get_all_services():
+    sel.force_navigate('containers_services')
+    ui_services = [r.name.text for r in list_tbl.rows()]
+    return ui_services
+
 nav.add_branch(
     'containers_services',
     {
@@ -54,6 +60,8 @@ class Service(Taggable, SummaryMixin):
     def navigate(self, detail=True):
         if detail is True:
             if not self._on_detail_page():
-                sel.force_navigate('containers_service_detail', context={'service': self})
+                sel.force_navigate(
+                    'containers_service_detail', context={
+                        'service': self})
         else:
             sel.force_navigate('containers_service', context={'service': self})

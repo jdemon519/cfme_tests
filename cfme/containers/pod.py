@@ -8,6 +8,12 @@ from . import details_page
 
 list_tbl = CheckboxTable(table_locator="//div[@id='list_grid']//table")
 
+
+def get_all_pods():
+    sel.force_navigate('containers_pods')
+    ui_pods = [r.name.text for r in list_tbl.rows()]
+    return ui_pods
+
 nav.add_branch(
     'containers_pods',
     {
@@ -55,6 +61,8 @@ class Pod(Taggable, SummaryMixin):
     def navigate(self, detail=True):
         if detail is True:
             if not self._on_detail_page():
-                sel.force_navigate('containers_pod_detail', context={'pod': self})
+                sel.force_navigate(
+                    'containers_pod_detail', context={
+                        'pod': self})
         else:
             sel.force_navigate('containers_pod', context={'pod': self})
