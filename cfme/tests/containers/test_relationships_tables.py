@@ -9,7 +9,7 @@ from cfme.containers.image import Image
 from cfme.containers.project import Project
 from utils import testgen
 from utils.version import current_version
-from cfme.web_ui import InfoBlock, CheckboxTable
+from cfme.web_ui import InfoBlock, CheckboxTable, toolbar as tb
 
 pytestmark = [
     pytest.mark.uncollectif(
@@ -38,6 +38,7 @@ def test_pods_rel(provider, rel):
           Relationships table
     """
     sel.force_navigate('containers_pods')
+    tb.select('List View')
     list_tbl_pod = CheckboxTable(table_locator="//div[@id='list_grid']//table")
     ui_pods = [r.name.text for r in list_tbl_pod.rows()]
     ui_pods_revised = filter(
@@ -63,14 +64,14 @@ def test_pods_rel(provider, rel):
     'rel', ['Containers Provider', 'Project', 'Routes', 'Pods', 'Nodes'])
 def test_services_rel(provider, rel):
     sel.force_navigate('containers_services')
+    tb.select('List View')
     list_tbl_service = CheckboxTable(
         table_locator="//div[@id='list_grid']//table")
     ui_services = [r.name.text for r in list_tbl_service.rows()]
     mgmt_objs = provider.mgmt.list_service()
 
-    if ui_services:
-        assert set(ui_services).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
+    assert set(ui_services).issubset(
+        [obj.name for obj in mgmt_objs]), 'Missing objects'
 
     for name in ui_services:
         obj = Service(name, provider)
@@ -96,14 +97,14 @@ def test_services_rel(provider, rel):
                           'Containers'])
 def test_nodes_rel(provider, rel):
     sel.force_navigate('containers_nodes')
+    tb.select('List View')
     list_tbl_node = CheckboxTable(
         table_locator="//div[@id='list_grid']//table")
     ui_nodes = [r.name.text for r in list_tbl_node.rows()]
     mgmt_objs = provider.mgmt.list_node()
 
-    if ui_nodes:
-        assert set(ui_nodes).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
+    assert set(ui_nodes).issubset(
+        [obj.name for obj in mgmt_objs]), 'Missing objects'
 
     for name in ui_nodes:
         obj = Node(name, provider)
@@ -124,14 +125,14 @@ def test_nodes_rel(provider, rel):
     'rel', ['Containers Provider', 'Project', 'Pods', 'Nodes'])
 def test_replicators_rel(provider, rel):
     sel.force_navigate('containers_replicators')
+    tb.select('List View')
     list_tbl_replicator = CheckboxTable(
         table_locator="//div[@id='list_grid']//table")
     ui_replicators = [r.name.text for r in list_tbl_replicator.rows()]
     mgmt_objs = provider.mgmt.list_replication_controller()
 
-    if ui_replicators:
-        assert set(ui_replicators).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
+    assert set(ui_replicators).issubset(
+        [obj.name for obj in mgmt_objs]), 'Missing objects'
 
     for name in ui_replicators:
         obj = Replicator(name, provider)
@@ -148,6 +149,7 @@ def test_replicators_rel(provider, rel):
             assert val == InfoBlock.text('Properties', 'Name')
 
 
+@pytest.mark.meta(blockers=[1365878])
 @pytest.mark.parametrize('rel',
                          ['Containers Provider',
                           'Image registry',
@@ -159,6 +161,7 @@ def test_images_rel(provider, rel):
     """ https://bugzilla.redhat.com/show_bug.cgi?id=1365878
     """
     sel.force_navigate('containers_images')
+    tb.select('List View')
     list_tbl_image = CheckboxTable(
         table_locator="//div[@id='list_grid']//table")
     ui_images = [r.name.text for r in list_tbl_image.rows()]
@@ -186,14 +189,14 @@ def test_images_rel(provider, rel):
                           'Nodes'])
 def test_projects_rel(provider, rel):
     sel.force_navigate('containers_projects')
+    tb.select('List View')
     list_tbl_project = CheckboxTable(
         table_locator="//div[@id='list_grid']//table")
     ui_projects = [r.name.text for r in list_tbl_project.rows()]
     mgmt_objs = provider.mgmt.list_project()
 
-    if ui_projects:
-        assert set(ui_projects).issubset(
-            [obj.name for obj in mgmt_objs]), 'Missing objects'
+    assert set(ui_projects).issubset(
+        [obj.name for obj in mgmt_objs]), 'Missing objects'
 
     for name in ui_projects:
         obj = Project(name, provider)
