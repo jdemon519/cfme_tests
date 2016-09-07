@@ -9,11 +9,6 @@ from . import details_page
 list_tbl = CheckboxTable(table_locator="//div[@id='list_grid']//table")
 
 
-def get_all_projects():
-    sel.force_navigate('containers_projects')
-    ui_projects = [r.name.text for r in list_tbl.rows()]
-    return ui_projects
-
 nav.add_branch(
     'containers_projects',
     {
