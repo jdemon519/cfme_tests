@@ -8,11 +8,6 @@ from . import details_page
 list_tbl = CheckboxTable(table_locator="//div[@id='list_grid']//table")
 
 
-def get_all_routes():
-    sel.force_navigate('containers_routes')
-    ui_routes = [r.name.text for r in list_tbl.rows()]
-    return ui_routes
-
 nav.add_branch(
     'containers_routes',
     {
